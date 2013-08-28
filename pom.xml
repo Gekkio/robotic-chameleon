@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
+	<groupId>fi.gekkio.roboticchameleon</groupId>
+	<artifactId>robotic-chameleon-parent</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<description>
+	  Robotic Chameleon: Android Java library for YUV scaling and conversion
+	</description>
+	<url>https://github.com/Gekkio/robotic-chameleon</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<android.api.version>10</android.api.version>
+
+		<android.version>2.3.3_r2</android.version>
+
+		<maven.android.version>3.6.2-SNAPSHOT</maven.android.version>
+		<maven.clean.version>2.5</maven.clean.version>
+		<maven.compiler.version>3.1</maven.compiler.version>
+		<maven.findbugs.version>2.5.2</maven.findbugs.version>
+		<maven.gpg.version>1.4</maven.gpg.version>
+	</properties>
+
+	<licenses>
+		<license>
+			<name>Apache 2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:git:git@github.com:gekkio/robotic-chameleon.git</connection>
+		<developerConnection>scm:git:git@github.com:gekkio/robotic-chameleon.git</developerConnection>
+		<url>git@github.com:gekkio/robotic-chameleon.git</url>
+	</scm>
+
+	<developers>
+		<developer>
+			<id>gekkio</id>
+			<name>Joonas Javanainen</name>
+			<email>joonas.javanainen@gmail.com</email>
+			<timezone>+2</timezone>
+		</developer>
+	</developers>
+
+	<modules>
+		<module>robotic-chameleon</module>
+		<module>robotic-chameleon-tests</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>android</groupId>
+				<artifactId>android</artifactId>
+				<version>${android.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>${maven.clean.version}</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.version}</version>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>${maven.gpg.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>${maven.findbugs.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+					<artifactId>android-maven-plugin</artifactId>
+					<version>${maven.android.version}</version>
+					<extensions>true</extensions>
+					<configuration>
+						<sdk>
+							<platform>${android.api.version}</platform>
+						</sdk>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

@@ -1,0 +1,12 @@
+*~
+*.bak
+*.log
+*.swp
+.classpath
+.project
+.settings/
+bin/
+gen/
+libs/
+obj/
+target/

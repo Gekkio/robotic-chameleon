@@ -1,0 +1,3 @@
+[submodule "third-party/libyuv"]
+	path = third-party/libyuv
+	url = git@github.com:Gekkio/libyuv.git
