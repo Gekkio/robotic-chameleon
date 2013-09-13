@@ -12,40 +12,51 @@ public final class BGRA {
     }
 
     public void toARGB(
-        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer srcBGRA, int srcStrideBGRA,
         ByteBuffer dstARGB, int dstStrideARGB,
         int width, int height) {
 
         RoboticChameleonJNI.BGRAToARGB(
-            srcFrame, srcStrideFrame,
+            srcBGRA, srcStrideBGRA,
             dstARGB, dstStrideARGB,
             width, height);
     }
 
     public void toI420(
-        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer srcBGRA, int srcStrideBGRA,
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstU, int dstStrideU,
         ByteBuffer dstV, int dstStrideV,
         int width, int height) {
 
         RoboticChameleonJNI.BGRAToI420(
-            srcFrame, srcStrideFrame,
+            srcBGRA, srcStrideBGRA,
             dstY, dstStrideY,
             dstU, dstStrideU,
             dstV, dstStrideV,
             width, height);
     }
 
+    public void toI420(
+        ByteBuffer srcBGRA, int srcStrideBGRA,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height) {
+
+        RoboticChameleonJNI.BGRAToI420(
+            srcBGRA, srcStrideBGRA,
+            dstI420, dstStrideY, dstStrideU, dstStrideV,
+            width, height);
+    }
+
     public void toYV12(
-        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer srcBGRA, int srcStrideBGRA,
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstV, int dstStrideV,
         ByteBuffer dstU, int dstStrideU,
         int width, int height) {
 
         RoboticChameleonJNI.BGRAToI420(
-            srcFrame, srcStrideFrame,
+            srcBGRA, srcStrideBGRA,
             dstY, dstStrideY,
             dstU, dstStrideU,
             dstV, dstStrideV,

@@ -12,40 +12,51 @@ public final class RAW {
     }
 
     public void toARGB(
-        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer srcRAW, int srcStrideRAW,
         ByteBuffer dstARGB, int dstStrideARGB,
         int width, int height) {
 
         RoboticChameleonJNI.RAWToARGB(
-            srcFrame, srcStrideFrame,
+            srcRAW, srcStrideRAW,
             dstARGB, dstStrideARGB,
             width, height);
     }
 
     public void toI420(
-        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer srcRAW, int srcStrideRAW,
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstU, int dstStrideU,
         ByteBuffer dstV, int dstStrideV,
         int width, int height) {
 
         RoboticChameleonJNI.RAWToI420(
-            srcFrame, srcStrideFrame,
+            srcRAW, srcStrideRAW,
             dstY, dstStrideY,
             dstU, dstStrideU,
             dstV, dstStrideV,
             width, height);
     }
 
+    public void toI420(
+        ByteBuffer srcRAW, int srcStrideRAW,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height) {
+
+        RoboticChameleonJNI.RAWToI420(
+            srcRAW, srcStrideRAW,
+            dstI420, dstStrideY, dstStrideU, dstStrideV,
+            width, height);
+    }
+
     public void toYV12(
-        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer srcRAW, int srcStrideRAW,
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstV, int dstStrideV,
         ByteBuffer dstU, int dstStrideU,
         int width, int height) {
 
         RoboticChameleonJNI.RAWToI420(
-            srcFrame, srcStrideFrame,
+            srcRAW, srcStrideRAW,
             dstY, dstStrideY,
             dstU, dstStrideU,
             dstV, dstStrideV,

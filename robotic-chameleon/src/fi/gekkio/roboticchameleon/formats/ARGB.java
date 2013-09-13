@@ -37,15 +37,26 @@ public final class ARGB {
             width, height);
     }
 
+    public void toI420(
+        ByteBuffer srcARGB, int srcStrideARGB,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height) {
+
+        RoboticChameleonJNI.ARGBToI420(
+            srcARGB, srcStrideARGB,
+            dstI420, dstStrideY, dstStrideU, dstStrideV,
+            width, height);
+    }
+
     public void toYV12(
-        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer srcARGB, int srcStrideARGB,
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstV, int dstStrideV,
         ByteBuffer dstU, int dstStrideU,
         int width, int height) {
 
         RoboticChameleonJNI.ARGBToI420(
-            srcFrame, srcStrideFrame,
+            srcARGB, srcStrideARGB,
             dstY, dstStrideY,
             dstU, dstStrideU,
             dstV, dstStrideV,

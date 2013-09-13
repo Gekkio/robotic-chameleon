@@ -37,6 +37,17 @@ public final class M420 {
             width, height);
     }
 
+    public void toI420(
+        ByteBuffer srcM420, int srcStrideM420,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height) {
+
+        RoboticChameleonJNI.M420ToI420(
+            srcM420, srcStrideM420,
+            dstI420, dstStrideY, dstStrideU, dstStrideV,
+            width, height);
+    }
+
     public void toYV12(
         ByteBuffer srcM420, int srcStrideM420,
         ByteBuffer dstY, int dstStrideY,

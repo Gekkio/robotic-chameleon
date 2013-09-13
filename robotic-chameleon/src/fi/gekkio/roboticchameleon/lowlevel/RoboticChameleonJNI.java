@@ -20,6 +20,25 @@ public final class RoboticChameleonJNI {
         ByteBuffer dstV, int dstStrideV,
         int width, int height);
 
+    public static native void I444ToI420(
+        ByteBuffer srcI444, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstY, int dstStrideY,
+        ByteBuffer dstU, int dstStrideU,
+        ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void I444ToI420(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcU, int srcStrideU,
+        ByteBuffer srcV, int srcStrideV,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
+    public static native void I444ToI420(
+        ByteBuffer srcI444, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
     public static native void I422ToI420(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcU, int srcStrideU,
@@ -27,6 +46,25 @@ public final class RoboticChameleonJNI {
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstU, int dstStrideU,
         ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void I422ToI420(
+        ByteBuffer srcI422, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstY, int dstStrideY,
+        ByteBuffer dstU, int dstStrideU,
+        ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void I422ToI420(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcU, int srcStrideU,
+        ByteBuffer srcV, int srcStrideV,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
+    public static native void I422ToI420(
+        ByteBuffer srcI422, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
         int width, int height);
 
     public static native void I411ToI420(
@@ -38,11 +76,35 @@ public final class RoboticChameleonJNI {
         ByteBuffer dstV, int dstStrideV,
         int width, int height);
 
+    public static native void I411ToI420(
+        ByteBuffer srcI411, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstY, int dstStrideY,
+        ByteBuffer dstU, int dstStrideU,
+        ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void I411ToI420(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcU, int srcStrideU,
+        ByteBuffer srcV, int srcStrideV,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
+    public static native void I411ToI420(
+        ByteBuffer srcI411, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
     public static native void I400ToI420(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstU, int dstStrideU,
         ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void I400ToI420(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
         int width, int height);
 
     public static native void I420Copy(
@@ -54,12 +116,49 @@ public final class RoboticChameleonJNI {
         ByteBuffer dstV, int dstStrideV,
         int width, int height);
 
+    public static native void I420Copy(
+        ByteBuffer srcI420, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstY, int dstStrideY,
+        ByteBuffer dstU, int dstStrideU,
+        ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void I420Copy(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcU, int srcStrideU,
+        ByteBuffer srcV, int srcStrideV,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
+    public static native void I420Copy(
+        ByteBuffer srcI420, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
     public static native void NV12ToI420(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcUV, int srcStrideUV,
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstU, int dstStrideU,
         ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void NV12ToI420(
+        ByteBuffer srcNV12, int srcStrideY, int srcStrideUV,
+        ByteBuffer dstY, int dstStrideY,
+        ByteBuffer dstU, int dstStrideU,
+        ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void NV12ToI420(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcUV, int srcStrideUV,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
+    public static native void NV12ToI420(
+        ByteBuffer srcNV12, int srcStrideY, int srcStrideUV,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
         int width, int height);
 
     public static native void NV21ToI420(
@@ -70,11 +169,34 @@ public final class RoboticChameleonJNI {
         ByteBuffer dstV, int dstStrideV,
         int width, int height);
 
+    public static native void NV21ToI420(
+        ByteBuffer srcNV21, int srcStrideY, int srcStrideUV,
+        ByteBuffer dstY, int dstStrideY,
+        ByteBuffer dstU, int dstStrideU,
+        ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void NV21ToI420(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcUV, int srcStrideUV,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
+    public static native void NV21ToI420(
+        ByteBuffer srcNV21, int srcStrideY, int srcStrideUV,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
     public static native void YUY2ToI420(
         ByteBuffer srcYUY2, int srcStrideYUY2,
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstU, int dstStrideU,
         ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void YUY2ToI420(
+        ByteBuffer srcYUY2, int srcStrideYUY2,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
         int width, int height);
 
     public static native void UYVYToI420(
@@ -84,11 +206,21 @@ public final class RoboticChameleonJNI {
         ByteBuffer dstV, int dstStrideV,
         int width, int height);
 
+    public static native void UYVYToI420(
+        ByteBuffer srcUYVY, int srcStrideUYVY,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
     public static native void M420ToI420(
         ByteBuffer srcM420, int srcStrideM420,
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstU, int dstStrideU,
         ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void M420ToI420(
+        ByteBuffer srcM420, int srcStrideM420,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
         int width, int height);
 
     public static native void Q420ToI420(
@@ -99,11 +231,22 @@ public final class RoboticChameleonJNI {
         ByteBuffer dstV, int dstStrideV,
         int width, int height);
 
+    public static native void Q420ToI420(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcYUY2, int srcStrideYUY2,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
     public static native void ARGBToI420(
         ByteBuffer srcFrame, int srcStrideFrame,
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstU, int dstStrideU,
         ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void ARGBToI420(
+        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
         int width, int height);
 
     public static native void BGRAToI420(
@@ -113,11 +256,21 @@ public final class RoboticChameleonJNI {
         ByteBuffer dstV, int dstStrideV,
         int width, int height);
 
+    public static native void BGRAToI420(
+        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
     public static native void ABGRToI420(
         ByteBuffer srcFrame, int srcStrideFrame,
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstU, int dstStrideU,
         ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void ABGRToI420(
+        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
         int width, int height);
 
     public static native void RGBAToI420(
@@ -127,11 +280,21 @@ public final class RoboticChameleonJNI {
         ByteBuffer dstV, int dstStrideV,
         int width, int height);
 
+    public static native void RGBAToI420(
+        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
     public static native void RGB24ToI420(
         ByteBuffer srcFrame, int srcStrideFrame,
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstU, int dstStrideU,
         ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void RGB24ToI420(
+        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
         int width, int height);
 
     public static native void RAWToI420(
@@ -141,11 +304,21 @@ public final class RoboticChameleonJNI {
         ByteBuffer dstV, int dstStrideV,
         int width, int height);
 
+    public static native void RAWToI420(
+        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
     public static native void RGB565ToI420(
         ByteBuffer srcFrame, int srcStrideFrame,
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstU, int dstStrideU,
         ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void RGB565ToI420(
+        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
         int width, int height);
 
     public static native void ARGB1555ToI420(
@@ -155,11 +328,21 @@ public final class RoboticChameleonJNI {
         ByteBuffer dstV, int dstStrideV,
         int width, int height);
 
+    public static native void ARGB1555ToI420(
+        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height);
+
     public static native void ARGB4444ToI420(
         ByteBuffer srcFrame, int srcStrideFrame,
         ByteBuffer dstY, int dstStrideY,
         ByteBuffer dstU, int dstStrideU,
         ByteBuffer dstV, int dstStrideV,
+        int width, int height);
+
+    public static native void ARGB4444ToI420(
+        ByteBuffer srcFrame, int srcStrideFrame,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
         int width, int height);
 
     public static native void ARGBCopy(

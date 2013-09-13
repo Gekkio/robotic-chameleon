@@ -52,6 +52,19 @@ public final class NV12 {
             width, height);
     }
 
+    public void toI420(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcUV, int srcStrideUV,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height) {
+
+        RoboticChameleonJNI.NV12ToI420(
+            srcY, srcStrideY,
+            srcUV, srcStrideUV,
+            dstI420, dstStrideY, dstStrideU, dstStrideV,
+            width, height);
+    }
+
     public void toYV12(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcUV, int srcStrideUV,

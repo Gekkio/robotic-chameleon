@@ -37,6 +37,17 @@ public final class UYVY {
             width, height);
     }
 
+    public void toI420(
+        ByteBuffer srcUYVY, int srcStrideUYVY,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height) {
+
+        RoboticChameleonJNI.UYVYToI420(
+            srcUYVY, srcStrideUYVY,
+            dstI420, dstStrideY, dstStrideU, dstStrideV,
+            width, height);
+    }
+
     public void toYV12(
         ByteBuffer srcUYVY, int srcStrideUYVY,
         ByteBuffer dstY, int dstStrideY,

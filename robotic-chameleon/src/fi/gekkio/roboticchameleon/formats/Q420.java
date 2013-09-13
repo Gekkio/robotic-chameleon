@@ -28,6 +28,19 @@ public final class Q420 {
             width, height);
     }
 
+    public void toI420(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcYUY2, int srcStrideYUY2,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height) {
+
+        RoboticChameleonJNI.Q420ToI420(
+            srcY, srcStrideY,
+            srcYUY2, srcStrideYUY2,
+            dstI420, dstStrideY, dstStrideU, dstStrideV,
+            width, height);
+    }
+
     public void toYV12(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcYUY2, int srcStrideYUY2,
@@ -44,4 +57,5 @@ public final class Q420 {
             dstV, dstStrideV,
             width, height);
     }
+
 }
