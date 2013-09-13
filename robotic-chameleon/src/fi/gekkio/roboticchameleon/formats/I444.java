@@ -26,6 +26,17 @@ public final class I444 {
             width, height);
     }
 
+    public void toARGB(
+        ByteBuffer srcI444, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstARGB, int dstStrideARGB,
+        int width, int height) {
+
+        RoboticChameleonJNI.I444ToARGB(
+            srcI444, srcStrideY, srcStrideU, srcStrideV,
+            dstARGB, dstStrideARGB,
+            width, height);
+    }
+
     public void toI420(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcU, int srcStrideU,

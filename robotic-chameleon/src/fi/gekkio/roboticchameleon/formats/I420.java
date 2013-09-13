@@ -26,6 +26,17 @@ public final class I420 {
             width, height);
     }
 
+    public void toARGB(
+        ByteBuffer srcI420, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstARGB, int dstStrideARGB,
+        int width, int height) {
+
+        RoboticChameleonJNI.I420ToARGB(
+            srcI420, srcStrideY, srcStrideU, srcStrideV,
+            dstARGB, dstStrideARGB,
+            width, height);
+    }
+
     public void toI420(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcU, int srcStrideU,

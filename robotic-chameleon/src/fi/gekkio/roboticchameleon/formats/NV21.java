@@ -24,6 +24,17 @@ public final class NV21 {
             width, height);
     }
 
+    public void toARGB(
+        ByteBuffer srcNV21, int srcStrideY, int srcStrideVU,
+        ByteBuffer dstARGB, int dstStrideARGB,
+        int width, int height) {
+
+        RoboticChameleonJNI.NV21ToARGB(
+            srcNV21, srcStrideY, srcStrideVU,
+            dstARGB, dstStrideARGB,
+            width, height);
+    }
+
     public void toI420(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcVU, int srcStrideVU,

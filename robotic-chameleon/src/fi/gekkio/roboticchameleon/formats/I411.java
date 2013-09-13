@@ -26,6 +26,17 @@ public final class I411 {
             width, height);
     }
 
+    public void toARGB(
+        ByteBuffer srcI411, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstARGB, int dstStrideARGB,
+        int width, int height) {
+
+        RoboticChameleonJNI.I411ToARGB(
+            srcI411, srcStrideY, srcStrideU, srcStrideV,
+            dstARGB, dstStrideARGB,
+            width, height);
+    }
+
     public void toI420(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcU, int srcStrideU,

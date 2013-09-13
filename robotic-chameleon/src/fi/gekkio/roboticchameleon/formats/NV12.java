@@ -24,6 +24,17 @@ public final class NV12 {
             width, height);
     }
 
+    public void toARGB(
+        ByteBuffer srcNV12, int srcStrideY, int srcStrideUV,
+        ByteBuffer dstARGB, int dstStrideARGB,
+        int width, int height) {
+
+        RoboticChameleonJNI.NV12ToARGB(
+            srcNV12, srcStrideY, srcStrideUV,
+            dstARGB, dstStrideARGB,
+            width, height);
+    }
+
     public void toI420(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcUV, int srcStrideUV,

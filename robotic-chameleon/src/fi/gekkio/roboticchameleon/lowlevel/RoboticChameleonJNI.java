@@ -174,10 +174,20 @@ public final class RoboticChameleonJNI {
         ByteBuffer dstARGB, int dstStrideARGB,
         int width, int height);
 
+    public static native void I420ToARGB(
+        ByteBuffer srcI420, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstARGB, int dstStrideARGB,
+        int width, int height);
+
     public static native void I422ToARGB(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcU, int srcStrideU,
         ByteBuffer srcV, int srcStrideV,
+        ByteBuffer dstARGB, int dstStrideARGB,
+        int width, int height);
+
+    public static native void I422ToARGB(
+        ByteBuffer srcI422, int srcStrideY, int srcStrideU, int srcStrideV,
         ByteBuffer dstARGB, int dstStrideARGB,
         int width, int height);
 
@@ -188,10 +198,20 @@ public final class RoboticChameleonJNI {
         ByteBuffer dstARGB, int dstStrideARGB,
         int width, int height);
 
+    public static native void I444ToARGB(
+        ByteBuffer srcI444, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstARGB, int dstStrideARGB,
+        int width, int height);
+
     public static native void I411ToARGB(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcU, int srcStrideU,
         ByteBuffer srcV, int srcStrideV,
+        ByteBuffer dstARGB, int dstStrideARGB,
+        int width, int height);
+
+    public static native void I411ToARGB(
+        ByteBuffer srcI411, int srcStrideY, int srcStrideU, int srcStrideV,
         ByteBuffer dstARGB, int dstStrideARGB,
         int width, int height);
 
@@ -206,9 +226,19 @@ public final class RoboticChameleonJNI {
         ByteBuffer dstARGB, int dstStrideARGB,
         int width, int height);
 
+    public static native void NV12ToARGB(
+        ByteBuffer srcNV12, int srcStrideY, int srcStrideUV,
+        ByteBuffer dstARGB, int dstStrideARGB,
+        int width, int height);
+
     public static native void NV21ToARGB(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcVU, int srcStrideVU,
+        ByteBuffer dstARGB, int dstStrideARGB,
+        int width, int height);
+
+    public static native void NV21ToARGB(
+        ByteBuffer srcNV21, int srcStrideY, int srcStrideVU,
         ByteBuffer dstARGB, int dstStrideARGB,
         int width, int height);
 

@@ -26,6 +26,17 @@ public final class I422 {
             width, height);
     }
 
+    public void toARGB(
+        ByteBuffer srcI422, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstARGB, int dstStrideARGB,
+        int width, int height) {
+
+        RoboticChameleonJNI.I422ToARGB(
+            srcI422, srcStrideY, srcStrideU, srcStrideV,
+            dstARGB, dstStrideARGB,
+            width, height);
+    }
+
     public void toI420(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcU, int srcStrideU,

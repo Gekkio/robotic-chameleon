@@ -6,7 +6,7 @@ import fi.gekkio.roboticchameleon.RoboticChameleon;
 
 public class I420Test extends TestBase {
 
-    static final Conversion I420ToARGB = new Conversion() {
+    static final Conversion SliceI420ToARGB = new Conversion() {
         @Override
         public void convert(ByteBuffer src, ByteBuffer dst) {
             int srcStrideY = WIDTH;
@@ -28,6 +28,32 @@ public class I420Test extends TestBase {
             return WIDTH * HEIGHT * 4;
         }
     };
+
+    static final Conversion I420ToARGB = new Conversion() {
+        @Override
+        public void convert(ByteBuffer src, ByteBuffer dst) {
+            int srcStrideY = WIDTH;
+            int srcStrideU = WIDTH / 2;
+            int srcStrideV = WIDTH / 2;
+
+            int dstStrideARGB = WIDTH * 4;
+
+            RoboticChameleon.fromI420().toARGB(
+                src, srcStrideY, srcStrideU, srcStrideV,
+                dst, dstStrideARGB, WIDTH, HEIGHT);
+        }
+
+        @Override
+        public int getDstCapacity() {
+            return WIDTH * HEIGHT * 4;
+        }
+    };
+
+    public void testSliceI420ToARGB() {
+        byte[] inputData = getAssetBytes("frames/I420.yuv");
+        byte[] resultData = runOneWay(inputData, SliceI420ToARGB);
+        writeToFilesDir("SliceI420ToARGB.rgb", resultData);
+    }
 
     public void testI420ToARGB() {
         byte[] inputData = getAssetBytes("frames/I420.yuv");
