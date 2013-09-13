@@ -24,34 +24,6 @@
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
-				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
-				<artifactId>android-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>ndk-build</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<attachNativeArtifacts>true</attachNativeArtifacts>
-					<skipBuildLibsOutputDirectory>false</skipBuildLibsOutputDirectory>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>libs</directory>
-						</fileset>
-						<fileset>
-							<directory>obj</directory>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
 				<executions>

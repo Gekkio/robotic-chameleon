@@ -55,6 +55,7 @@
 	</developers>
 
 	<modules>
+		<module>librobotic-chameleon</module>
 		<module>robotic-chameleon</module>
 		<module>robotic-chameleon-tests</module>
 	</modules>

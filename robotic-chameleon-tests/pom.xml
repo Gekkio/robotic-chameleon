@@ -26,28 +26,28 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>robotic-chameleon</artifactId>
+			<artifactId>librobotic-chameleon</artifactId>
 			<version>${project.version}</version>
 			<type>so</type>
 			<classifier>armeabi</classifier>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>robotic-chameleon</artifactId>
+			<artifactId>librobotic-chameleon</artifactId>
 			<version>${project.version}</version>
 			<type>so</type>
 			<classifier>armeabi-v7a</classifier>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>robotic-chameleon</artifactId>
+			<artifactId>librobotic-chameleon</artifactId>
 			<version>${project.version}</version>
 			<type>so</type>
 			<classifier>mips</classifier>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>robotic-chameleon</artifactId>
+			<artifactId>librobotic-chameleon</artifactId>
 			<version>${project.version}</version>
 			<type>so</type>
 			<classifier>x86</classifier>
