@@ -6,6 +6,10 @@ import fi.gekkio.roboticchameleon.RoboticChameleon;
 
 public class I400Test extends TestBase {
 
+    public I400Test() {
+        super("frames/I400.yuv");
+    }
+
     static final Conversion I400ToARGB = new Conversion() {
         @Override
         public void convert(ByteBuffer src, ByteBuffer dst) {
@@ -71,19 +75,16 @@ public class I400Test extends TestBase {
     };
 
     public void testI400ToARGB() {
-        byte[] inputData = getAssetBytes("frames/I400.yuv");
         ByteBuffer resultData = runOneWay(inputData, I400ToARGB);
         writePngToFilesDir("I400ToARGB.png", resultData);
     }
 
     public void testI400ToI420Slice() {
-        byte[] inputData = getAssetBytes("frames/I400.yuv");
         ByteBuffer resultData = runOneWay(inputData, I400ToI420Slice);
         writeToFilesDir("I400ToI420Slice.yuv", ByteBuffers.asByteArray(resultData));
     }
 
     public void testI400ToI420() {
-        byte[] inputData = getAssetBytes("frames/I400.yuv");
         ByteBuffer resultData = runOneWay(inputData, I400ToI420);
         writeToFilesDir("I400ToI420.yuv", ByteBuffers.asByteArray(resultData));
     }

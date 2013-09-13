@@ -53,6 +53,21 @@ public final class NV21 {
     }
 
     public void toI420(
+        ByteBuffer srcNV21, int srcStrideY, int srcStrideVU,
+        ByteBuffer dstY, int dstStrideY,
+        ByteBuffer dstU, int dstStrideU,
+        ByteBuffer dstV, int dstStrideV,
+        int width, int height) {
+
+        RoboticChameleonJNI.NV21ToI420(
+            srcNV21, srcStrideY, srcStrideVU,
+            dstY, dstStrideY,
+            dstU, dstStrideU,
+            dstV, dstStrideV,
+            width, height);
+    }
+
+    public void toI420(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcVU, int srcStrideVU,
         ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
@@ -61,6 +76,17 @@ public final class NV21 {
         RoboticChameleonJNI.NV21ToI420(
             srcY, srcStrideY,
             srcVU, srcStrideVU,
+            dstI420, dstStrideY, dstStrideU, dstStrideV,
+            width, height);
+    }
+
+    public void toI420(
+        ByteBuffer srcNV21, int srcStrideY, int srcStrideVU,
+        ByteBuffer dstI420, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height) {
+
+        RoboticChameleonJNI.NV21ToI420(
+            srcNV21, srcStrideY, srcStrideVU,
             dstI420, dstStrideY, dstStrideU, dstStrideV,
             width, height);
     }

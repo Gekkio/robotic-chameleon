@@ -6,6 +6,10 @@ import fi.gekkio.roboticchameleon.RoboticChameleon;
 
 public class I422Test extends TestBase {
 
+    public I422Test() {
+        super("frames/I422.yuv");
+    }
+
     static final Conversion SliceI422ToARGB = new Conversion() {
         @Override
         public void convert(ByteBuffer src, ByteBuffer dst) {
@@ -156,37 +160,31 @@ public class I422Test extends TestBase {
     };
 
     public void testSliceI422ToARGB() {
-        byte[] inputData = getAssetBytes("frames/I422.yuv");
         ByteBuffer resultData = runOneWay(inputData, SliceI422ToARGB);
         writePngToFilesDir("SliceI422ToARGB.png", resultData);
     }
 
     public void testI422ToARGB() {
-        byte[] inputData = getAssetBytes("frames/I422.yuv");
         ByteBuffer resultData = runOneWay(inputData, I422ToARGB);
         writePngToFilesDir("I422ToARGB.png", resultData);
     }
 
     public void testI422ToI420() {
-        byte[] inputData = getAssetBytes("frames/I422.yuv");
         ByteBuffer resultData = runOneWay(inputData, I422ToI420);
         writeToFilesDir("I422ToI420.yuv", ByteBuffers.asByteArray(resultData));
     }
 
     public void testSliceI422ToI420() {
-        byte[] inputData = getAssetBytes("frames/I422.yuv");
         ByteBuffer resultData = runOneWay(inputData, SliceI422ToI420);
         writeToFilesDir("SliceI422ToI420.yuv", ByteBuffers.asByteArray(resultData));
     }
 
     public void testI422ToI420Slice() {
-        byte[] inputData = getAssetBytes("frames/I422.yuv");
         ByteBuffer resultData = runOneWay(inputData, I422ToI420Slice);
         writeToFilesDir("I422ToI420Slice.yuv", ByteBuffers.asByteArray(resultData));
     }
 
     public void testSliceI422ToI420Slice() {
-        byte[] inputData = getAssetBytes("frames/I422.yuv");
         ByteBuffer resultData = runOneWay(inputData, SliceI422ToI420Slice);
         writeToFilesDir("SliceI422ToI420Slice.yuv", ByteBuffers.asByteArray(resultData));
     }

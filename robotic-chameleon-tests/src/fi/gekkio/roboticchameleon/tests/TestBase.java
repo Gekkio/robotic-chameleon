@@ -8,6 +8,7 @@ import java.nio.ByteBuffer;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Bitmap.Config;
+import android.graphics.Color;
 import android.test.AndroidTestCase;
 
 import com.google.common.base.Throwables;
@@ -21,6 +22,20 @@ class TestBase extends AndroidTestCase {
 
     private Bitmap bitmap;
 
+    protected ByteBuffer inputData;
+
+    private final String frameFileName;
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        inputData = ByteBuffers.asDirectBuffer(getAssetBytes(frameFileName));
+    }
+
+    public TestBase(String frameFileName) {
+        this.frameFileName = frameFileName;
+    }
+
     protected final byte[] getAssetBytes(String fileName) {
         return Assets.getAssetBytes(getContext(), fileName);
     }
@@ -28,6 +43,7 @@ class TestBase extends AndroidTestCase {
     protected final void writePngToFilesDir(String fileName, ByteBuffer pixels) {
         if (bitmap == null)
             bitmap = Bitmap.createBitmap(WIDTH, HEIGHT, Config.ARGB_8888);
+        bitmap.eraseColor(Color.BLACK);
         bitmap.copyPixelsFromBuffer(pixels);
         pixels.rewind();
 
@@ -44,6 +60,7 @@ class TestBase extends AndroidTestCase {
         } catch (IOException e) {
             throw Throwables.propagate(e);
         }
+
     }
 
     protected final void writeToFilesDir(String fileName, byte[] data) {
@@ -62,8 +79,8 @@ class TestBase extends AndroidTestCase {
         void convert(ByteBuffer src, ByteBuffer dst);
     }
 
-    protected ByteBuffer runOneWay(byte[] srcData, Conversion conversion) {
-        ByteBuffer src = ByteBuffers.asDirectBuffer(srcData);
+    protected ByteBuffer runOneWay(ByteBuffer src, Conversion conversion) {
+        src.clear();
 
         ByteBuffer dst = ByteBuffer.allocateDirect(conversion.getDstCapacity());
         conversion.convert(src, dst);
@@ -73,8 +90,8 @@ class TestBase extends AndroidTestCase {
         return dst;
     }
 
-    protected ByteBuffer runTwoWay(byte[] srcData, Conversion firstConversion, Conversion secondConversion) {
-        ByteBuffer src = ByteBuffers.asDirectBuffer(srcData);
+    protected ByteBuffer runTwoWay(ByteBuffer src, Conversion firstConversion, Conversion secondConversion) {
+        src.clear();
 
         ByteBuffer firstDst = ByteBuffer.allocateDirect(firstConversion.getDstCapacity());
         firstConversion.convert(src, firstDst);
