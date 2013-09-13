@@ -30,6 +30,8 @@
 		<maven.compiler.version>3.1</maven.compiler.version>
 		<maven.findbugs.version>2.5.2</maven.findbugs.version>
 		<maven.gpg.version>1.4</maven.gpg.version>
+		<maven.javadoc.version>2.9.1</maven.javadoc.version>
+		<maven.source.version>2.2.1</maven.source.version>
 	</properties>
 
 	<licenses>
@@ -96,6 +98,15 @@
 					<version>${maven.gpg.version}</version>
 				</plugin>
 				<plugin>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${maven.javadoc.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${maven.source.version}</version>
+				</plugin>
+				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>findbugs-maven-plugin</artifactId>
 					<version>${maven.findbugs.version}</version>
@@ -117,6 +128,33 @@
 
 	<profiles>
 		<profile>
+			<id>snapshot</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>javadoc</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
 			<id>release</id>
 			<build>
 				<plugins>
@@ -126,6 +164,26 @@
 							<execution>
 								<goals>
 									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>javadoc</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>jar</goal>
 								</goals>
 							</execution>
 						</executions>
