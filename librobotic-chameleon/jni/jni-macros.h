@@ -157,4 +157,4 @@
 
 #define JNI_BUF         "Ljava/nio/ByteBuffer;"
 #define JNI_PLANE       JNI_BUF "I"
-#define JNI_CONVERT(NAME, PLANES) { #NAME, PLANES "II", (void*) JVM_ ## NAME }
+#define JNI_CONVERT(NAME, PLANES) { #NAME, "(" PLANES "II)V", (void*) JVM_ ## NAME }
