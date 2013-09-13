@@ -20,6 +20,7 @@ import fi.gekkio.roboticchameleon.formats.RGB565;
 import fi.gekkio.roboticchameleon.formats.RGBA;
 import fi.gekkio.roboticchameleon.formats.UYVY;
 import fi.gekkio.roboticchameleon.formats.YUY2;
+import fi.gekkio.roboticchameleon.formats.YV12;
 
 public final class RoboticChameleon {
 
@@ -104,6 +105,10 @@ public final class RoboticChameleon {
 
     public static YUY2 fromYUY2() {
         return YUY2.INSTANCE;
+    }
+
+    public static YV12 fromYV12() {
+        return YV12.INSTANCE;
     }
 
 }
