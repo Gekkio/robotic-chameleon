@@ -22,12 +22,78 @@
     return; \
   }
 
-#define PLANE(J_BUF, J_STRIDE, BUF, STRIDE, BUF_TYPE) \
-  DECLARE_BUFFER(J_BUF, BUF, BUF_TYPE) \
-  DECLARE_STRIDE(J_STRIDE, STRIDE)
+#define PLANE(PREFIX, BUF_TYPE, X) \
+  DECLARE_BUFFER(j_ ## PREFIX ## X, PREFIX ## X, BUF_TYPE) \
+  DECLARE_STRIDE(j_ ## PREFIX ## Stride ## X, PREFIX ## Stride ## X)
 
-#define SRC_PLANE(X) PLANE(j_src ## X, j_srcStride ## X, src ## X, srcStride ## X, const uint8*)
-#define DST_PLANE(X) PLANE(j_dst ## X, j_dstStride ## X, dst ## X, dstStride ## X, uint8*)
+#define SRC_PLANE(X) PLANE(src, const uint8*, X)
+#define DST_PLANE(X) PLANE(dst, uint8*, X)
+
+#define PLANE_2(PREFIX, BUF_TYPE, X, X1, X2) \
+  DECLARE_BUFFER(j_ ## PREFIX ## X, PREFIX ## X, BUF_TYPE); \
+  DECLARE_STRIDE(j_ ## PREFIX ## Stride ## X1, PREFIX ## Stride ## X1); \
+  DECLARE_STRIDE(j_ ## PREFIX ## Stride ## X2, PREFIX ## Stride ## X2); \
+  BUF_TYPE PREFIX ## X1 = PREFIX ## X; \
+  BUF_TYPE PREFIX ## X2 = PREFIX ## X1 + (PREFIX ## Stride ## X1 * height);
+
+#define SRC_PLANE_2(X, X1, X2) PLANE_2(src, const uint8*, X, X1, X2)
+
+#define DST_PLANE_2(X, X1, X2) PLANE_2(dst, uint8*, X, X1, X2)
+
+#define PLANE_3(PREFIX, BUF_TYPE, X, X1, X2, X3, SUBY) \
+  DECLARE_BUFFER(j_ ## PREFIX ## X, PREFIX ## X, BUF_TYPE); \
+  DECLARE_STRIDE(j_ ## PREFIX ## Stride ## X1, PREFIX ## Stride ## X1); \
+  DECLARE_STRIDE(j_ ## PREFIX ## Stride ## X2, PREFIX ## Stride ## X2); \
+  DECLARE_STRIDE(j_ ## PREFIX ## Stride ## X3, PREFIX ## Stride ## X3); \
+  BUF_TYPE PREFIX ## X1 = PREFIX ## X; \
+  BUF_TYPE PREFIX ## X2 = PREFIX ## X1 + (PREFIX ## Stride ## X1 * height); \
+  BUF_TYPE PREFIX ## X3 = PREFIX ## X2 + (PREFIX ## Stride ## X2 * height / SUBY);
+
+#define SRC_PLANE_3(X, X1, X2, X3, SUBY) \
+  PLANE_3(src, const uint8*, X, X1, X2, X3, SUBY)
+
+#define DST_PLANE_3(X, X1, X2, X3, SUBY) \
+  PLANE_3(dst, uint8*, X, X1, X2, X3, SUBY)
+
+#define CALL(NAME, ...) \
+  int result = NAME(__VA_ARGS__, width, height); \
+  if (result != 0) { \
+    THROW_ILLEGAL_STATE(#NAME " failed") \
+  }
+
+#define CALL_SRC_1(S1) \
+  src ## S1, srcStride ## S1
+
+#define CALL_SRC_2(S1, S2) \
+  src ## S1, srcStride ## S1, \
+  src ## S2, srcStride ## S2
+
+#define CALL_SRC_3(S1, S2, S3) \
+  src ## S1, srcStride ## S1, \
+  src ## S2, srcStride ## S2, \
+  src ## S3, srcStride ## S3
+
+#define CALL_DST_1(D1) \
+  dst ## D1, dstStride ## D1
+
+#define CALL_DST_2(D1, D2) \
+  dst ## D1, dstStride ## D1, \
+  dst ## D2, dstStride ## D2
+
+#define CALL_DST_3(D1, D2, D3) \
+  dst ## D1, dstStride ## D1, \
+  dst ## D2, dstStride ## D2, \
+  dst ## D3, dstStride ## D3
+
+#define CALL_1_1(NAME, S1,         D1)         CALL(NAME, CALL_SRC_1(S1),         CALL_DST_1(D1))
+#define CALL_1_2(NAME, S1,         D1, D2)     CALL(NAME, CALL_SRC_1(S1),         CALL_DST_2(D1, D2))
+#define CALL_1_3(NAME, S1,         D1, D2, D3) CALL(NAME, CALL_SRC_1(S1),         CALL_DST_3(D1, D2, D3))
+#define CALL_2_1(NAME, S1, S2,     D1)         CALL(NAME, CALL_SRC_2(S1, S2),     CALL_DST_1(D1))
+#define CALL_2_2(NAME, S1, S2,     D1, D2)     CALL(NAME, CALL_SRC_2(S1, S2),     CALL_DST_2(D1, D2))
+#define CALL_2_3(NAME, S1, S2,     D1, D2, D3) CALL(NAME, CALL_SRC_2(S1, S2),     CALL_DST_3(D1, D2, D3))
+#define CALL_3_1(NAME, S1, S2, S3, D1)         CALL(NAME, CALL_SRC_3(S1, S2, S3), CALL_DST_1(D1))
+#define CALL_3_2(NAME, S1, S2, S3, D1, D2)     CALL(NAME, CALL_SRC_3(S1, S2, S3), CALL_DST_2(D1, D2))
+#define CALL_3_3(NAME, S1, S2, S3, D1, D2, D3) CALL(NAME, CALL_SRC_3(S1, S2, S3), CALL_DST_3(D1, D2, D3))
 
 #define PLANES_1_TO_1(NAME, S1, D1) \
   static void JNICALL JVM_ ## NAME(JNIEnv *env, jclass, \
@@ -36,13 +102,7 @@
       jint width, jint height) { \
     SRC_PLANE(S1); \
     DST_PLANE(D1); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      dst ## D1, dstStride ## D1, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    CALL_1_1(NAME, S1, D1); \
   }
 
 #define PLANES_1_TO_3(NAME, S1, D1, D2, D3) \
@@ -56,15 +116,7 @@
     DST_PLANE(D1); \
     DST_PLANE(D2); \
     DST_PLANE(D3); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      dst ## D1, dstStride ## D1, \
-      dst ## D2, dstStride ## D2, \
-      dst ## D3, dstStride ## D3, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    CALL_1_3(NAME, S1, D1, D2, D3); \
   }
 
 #define PLANES_1_TO_P(NAME, S1, D, D1, D2, D3, DSUBY) \
@@ -76,22 +128,8 @@
       jint j_dstStride ## D3, \
       jint width, jint height) { \
     SRC_PLANE(S1); \
-    DECLARE_BUFFER(j_dst ## D, dst ## D, uint8*); \
-    DECLARE_STRIDE(j_dstStride ## D1, dstStride ## D1); \
-    DECLARE_STRIDE(j_dstStride ## D2, dstStride ## D2); \
-    DECLARE_STRIDE(j_dstStride ## D3, dstStride ## D3); \
-    uint8* dst ## D1 = dst ## D; \
-    uint8* dst ## D2 = dst ## D1 + (dstStride ## D1 * height); \
-    uint8* dst ## D3 = dst ## D2 + (dstStride ## D2 * height / DSUBY); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      dst ## D1, dstStride ## D1, \
-      dst ## D2, dstStride ## D2, \
-      dst ## D3, dstStride ## D3, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    DST_PLANE_3(D, D1, D2, D3, DSUBY); \
+    CALL_1_3(NAME, S1, D1, D2, D3); \
   }
 
 #define PLANES_2_TO_1(NAME, S1, S2, D1) \
@@ -103,14 +141,7 @@
     SRC_PLANE(S1); \
     SRC_PLANE(S2); \
     DST_PLANE(D1); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      src ## S2, srcStride ## S2, \
-      dst ## D1, dstStride ## D1, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    CALL_2_1(NAME, S1, S2, D1); \
   }
 
 #define PLANES_2_TO_3(NAME, S1, S2, D1, D2, D3) \
@@ -126,16 +157,7 @@
     DST_PLANE(D1); \
     DST_PLANE(D2); \
     DST_PLANE(D3); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      src ## S2, srcStride ## S2, \
-      dst ## D1, dstStride ## D1, \
-      dst ## D2, dstStride ## D2, \
-      dst ## D3, dstStride ## D3, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    CALL_2_3(NAME, S1, S2, D1, D2, D3); \
   }
 
 #define PLANES_2_TO_P(NAME, S1, S2, D, D1, D2, D3, DSUBY) \
@@ -149,23 +171,8 @@
       jint width, jint height) { \
     SRC_PLANE(S1); \
     SRC_PLANE(S2); \
-    DECLARE_BUFFER(j_dst ## D, dst ## D, uint8*); \
-    DECLARE_STRIDE(j_dstStride ## D1, dstStride ## D1); \
-    DECLARE_STRIDE(j_dstStride ## D2, dstStride ## D2); \
-    DECLARE_STRIDE(j_dstStride ## D3, dstStride ## D3); \
-    uint8* dst ## D1 = dst ## D; \
-    uint8* dst ## D2 = dst ## D1 + (dstStride ## D1 * height); \
-    uint8* dst ## D3 = dst ## D2 + (dstStride ## D2 * height / DSUBY); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      src ## S2, srcStride ## S2, \
-      dst ## D1, dstStride ## D1, \
-      dst ## D2, dstStride ## D2, \
-      dst ## D3, dstStride ## D3, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    DST_PLANE_3(D, D1, D2, D3, DSUBY); \
+    CALL_2_3(NAME, S1, S2, D1, D2, D3); \
   }
 
 #define PLANES_3_TO_1(NAME, S1, S2, S3, D1) \
@@ -179,15 +186,7 @@
     SRC_PLANE(S2); \
     SRC_PLANE(S3); \
     DST_PLANE(D1); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      src ## S2, srcStride ## S2, \
-      src ## S3, srcStride ## S3, \
-      dst ## D1, dstStride ## D1, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    CALL_3_1(NAME, S1, S2, S3, D1); \
   }
 
 #define PLANES_3_TO_3(NAME, S1, S2, S3, D1, D2, D3) \
@@ -205,17 +204,7 @@
     DST_PLANE(D1); \
     DST_PLANE(D2); \
     DST_PLANE(D3); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      src ## S2, srcStride ## S2, \
-      src ## S3, srcStride ## S3, \
-      dst ## D1, dstStride ## D1, \
-      dst ## D2, dstStride ## D2, \
-      dst ## D3, dstStride ## D3, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    CALL_3_3(NAME, S1, S2, S3, D1, D2, D3); \
   }
 
 #define PLANES_3_TO_P(NAME, S1, S2, S3, D, D1, D2, D3, DSUBY) \
@@ -231,24 +220,8 @@
     SRC_PLANE(S1); \
     SRC_PLANE(S2); \
     SRC_PLANE(S3); \
-    DECLARE_BUFFER(j_dst ## D, dst ## D, uint8*); \
-    DECLARE_STRIDE(j_dstStride ## D1, dstStride ## D1); \
-    DECLARE_STRIDE(j_dstStride ## D2, dstStride ## D2); \
-    DECLARE_STRIDE(j_dstStride ## D3, dstStride ## D3); \
-    uint8* dst ## D1 = dst ## D; \
-    uint8* dst ## D2 = dst ## D1 + (dstStride ## D1 * height); \
-    uint8* dst ## D3 = dst ## D2 + (dstStride ## D2 * height / DSUBY); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      src ## S2, srcStride ## S2, \
-      src ## S3, srcStride ## S3, \
-      dst ## D1, dstStride ## D1, \
-      dst ## D2, dstStride ## D2, \
-      dst ## D3, dstStride ## D3, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    DST_PLANE_3(D, D1, D2, D3, DSUBY); \
+    CALL_3_3(NAME, S1, S2, S3, D1, D2, D3); \
   }
 
 #define PLANES_P_TO_1(NAME, S, S1, S2, S3, SSUBY, D1) \
@@ -260,23 +233,9 @@
       jobject j_dst ## D1, \
       jint j_dstStride ## D1, \
       jint width, jint height) { \
-    DECLARE_BUFFER(j_src ## S, src ## S, uint8*); \
-    DECLARE_STRIDE(j_srcStride ## S1, srcStride ## S1); \
-    DECLARE_STRIDE(j_srcStride ## S2, srcStride ## S2); \
-    DECLARE_STRIDE(j_srcStride ## S3, srcStride ## S3); \
-    const uint8* src ## S1 = src ## S; \
-    const uint8* src ## S2 = src ## S1 + (srcStride ## S1 * height); \
-    const uint8* src ## S3 = src ## S2 + (srcStride ## S2 * height / SSUBY); \
+    SRC_PLANE_3(S, S1, S2, S3, SSUBY); \
     DST_PLANE(D1); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      src ## S2, srcStride ## S2, \
-      src ## S3, srcStride ## S3, \
-      dst ## D1, dstStride ## D1, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    CALL_3_1(NAME, S1, S2, S3, D1); \
   }
 
 #define PLANES_P_TO_3(NAME, S, S1, S2, S3, SSUBY, D1, D2, D3) \
@@ -289,27 +248,11 @@
       jobject j_dst ## D2, jint j_dstStride ## D2, \
       jobject j_dst ## D3, jint j_dstStride ## D3, \
       jint width, jint height) { \
-    DECLARE_BUFFER(j_src ## S, src ## S, uint8*); \
-    DECLARE_STRIDE(j_srcStride ## S1, srcStride ## S1); \
-    DECLARE_STRIDE(j_srcStride ## S2, srcStride ## S2); \
-    DECLARE_STRIDE(j_srcStride ## S3, srcStride ## S3); \
-    const uint8* src ## S1 = src ## S; \
-    const uint8* src ## S2 = src ## S1 + (srcStride ## S1 * height); \
-    const uint8* src ## S3 = src ## S2 + (srcStride ## S2 * height / SSUBY); \
+    SRC_PLANE_3(S, S1, S2, S3, SSUBY); \
     DST_PLANE(D1); \
     DST_PLANE(D2); \
     DST_PLANE(D3); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      src ## S2, srcStride ## S2, \
-      src ## S3, srcStride ## S3, \
-      dst ## D1, dstStride ## D1, \
-      dst ## D2, dstStride ## D2, \
-      dst ## D3, dstStride ## D3, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    CALL_3_3(NAME, S1, S2, S3, D1, D2, D3); \
   }
 
 #define PLANES_P_TO_P(NAME, S, S1, S2, S3, SSUBY, D, D1, D2, D3, DSUBY) \
@@ -323,31 +266,9 @@
       jint j_dstStride ## D2, \
       jint j_dstStride ## D3, \
       jint width, jint height) { \
-    DECLARE_BUFFER(j_src ## S, src ## S, uint8*); \
-    DECLARE_STRIDE(j_srcStride ## S1, srcStride ## S1); \
-    DECLARE_STRIDE(j_srcStride ## S2, srcStride ## S2); \
-    DECLARE_STRIDE(j_srcStride ## S3, srcStride ## S3); \
-    const uint8* src ## S1 = src ## S; \
-    const uint8* src ## S2 = src ## S1 + (srcStride ## S1 * height); \
-    const uint8* src ## S3 = src ## S2 + (srcStride ## S2 * height / SSUBY); \
-    DECLARE_BUFFER(j_dst ## D, dst ## D, uint8*); \
-    DECLARE_STRIDE(j_dstStride ## D1, dstStride ## D1); \
-    DECLARE_STRIDE(j_dstStride ## D2, dstStride ## D2); \
-    DECLARE_STRIDE(j_dstStride ## D3, dstStride ## D3); \
-    uint8* dst ## D1 = dst ## D; \
-    uint8* dst ## D2 = dst ## D1 + (dstStride ## D1 * height); \
-    uint8* dst ## D3 = dst ## D2 + (dstStride ## D2 * height / DSUBY); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      src ## S2, srcStride ## S2, \
-      src ## S3, srcStride ## S3, \
-      dst ## D1, dstStride ## D1, \
-      dst ## D2, dstStride ## D2, \
-      dst ## D3, dstStride ## D3, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    SRC_PLANE_3(S, S1, S2, S3, SSUBY); \
+    DST_PLANE_3(D, D1, D2, D3, DSUBY); \
+    CALL_3_3(NAME, S1, S2, S3, D1, D2, D3); \
   }
 
 #define PLANES_SP_TO_1(NAME, S, S1, S2, D1) \
@@ -358,20 +279,9 @@
       jobject j_dst ## D1, \
       jint j_dstStride ## D1, \
       jint width, jint height) { \
-    DECLARE_BUFFER(j_src ## S, src ## S, uint8*); \
-    DECLARE_STRIDE(j_srcStride ## S1, srcStride ## S1); \
-    DECLARE_STRIDE(j_srcStride ## S2, srcStride ## S2); \
-    const uint8* src ## S1 = src ## S; \
-    const uint8* src ## S2 = src ## S1 + (srcStride ## S1 * height); \
+    SRC_PLANE_2(S, S1, S2); \
     DST_PLANE(D1); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      src ## S2, srcStride ## S2, \
-      dst ## D1, dstStride ## D1, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    CALL_2_1(NAME, S1, S2, D1); \
   }
 
 #define PLANES_SP_TO_3(NAME, S, S1, S2, D1, D2, D3) \
@@ -383,24 +293,11 @@
       jobject j_dst ## D2, jint j_dstStride ## D2, \
       jobject j_dst ## D3, jint j_dstStride ## D3, \
       jint width, jint height) { \
-    DECLARE_BUFFER(j_src ## S, src ## S, uint8*); \
-    DECLARE_STRIDE(j_srcStride ## S1, srcStride ## S1); \
-    DECLARE_STRIDE(j_srcStride ## S2, srcStride ## S2); \
-    const uint8* src ## S1 = src ## S; \
-    const uint8* src ## S2 = src ## S1 + (srcStride ## S1 * height); \
+    SRC_PLANE_2(S, S1, S2); \
     DST_PLANE(D1); \
     DST_PLANE(D2); \
     DST_PLANE(D3); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      src ## S2, srcStride ## S2, \
-      dst ## D1, dstStride ## D1, \
-      dst ## D2, dstStride ## D2, \
-      dst ## D3, dstStride ## D3, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    CALL_2_3(NAME, S1, S2, D1, D2, D3); \
   }
 
 #define PLANES_SP_TO_P(NAME, S, S1, S2, D, D1, D2, D3, DSUBY) \
@@ -413,28 +310,9 @@
       jint j_dstStride ## D2, \
       jint j_dstStride ## D3, \
       jint width, jint height) { \
-    DECLARE_BUFFER(j_src ## S, src ## S, uint8*); \
-    DECLARE_STRIDE(j_srcStride ## S1, srcStride ## S1); \
-    DECLARE_STRIDE(j_srcStride ## S2, srcStride ## S2); \
-    const uint8* src ## S1 = src ## S; \
-    const uint8* src ## S2 = src ## S1 + (srcStride ## S1 * height); \
-    DECLARE_BUFFER(j_dst ## D, dst ## D, uint8*); \
-    DECLARE_STRIDE(j_dstStride ## D1, dstStride ## D1); \
-    DECLARE_STRIDE(j_dstStride ## D2, dstStride ## D2); \
-    DECLARE_STRIDE(j_dstStride ## D3, dstStride ## D3); \
-    uint8* dst ## D1 = dst ## D; \
-    uint8* dst ## D2 = dst ## D1 + (dstStride ## D1 * height); \
-    uint8* dst ## D3 = dst ## D2 + (dstStride ## D2 * height / DSUBY); \
-    int result = NAME( \
-      src ## S1, srcStride ## S1, \
-      src ## S2, srcStride ## S2, \
-      dst ## D1, dstStride ## D1, \
-      dst ## D2, dstStride ## D2, \
-      dst ## D3, dstStride ## D3, \
-      width, height); \
-    if (result != 0) { \
-      THROW_ILLEGAL_STATE(#NAME " failed") \
-    } \
+    SRC_PLANE_2(S, S1, S2); \
+    DST_PLANE_3(D, D1, D2, D3, DSUBY); \
+    CALL_2_3(NAME, S1, S2, D1, D2, D3); \
   }
 
 #define JNI_BUF         "Ljava/nio/ByteBuffer;"
