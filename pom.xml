@@ -23,6 +23,7 @@
 		<android.api.version>10</android.api.version>
 
 		<android.version>2.3.3_r2</android.version>
+		<guava.version>15.0</guava.version>
 
 		<maven.android.version>3.6.2-SNAPSHOT</maven.android.version>
 		<maven.clean.version>2.5</maven.clean.version>
@@ -66,6 +67,11 @@
 				<groupId>android</groupId>
 				<artifactId>android</artifactId>
 				<version>${android.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

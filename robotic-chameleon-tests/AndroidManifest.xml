@@ -8,4 +8,12 @@
         android:minSdkVersion="10"
         android:targetSdkVersion="18" />
 
+    <application>
+        <uses-library android:name="android.test.runner" />
+    </application>
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:targetPackage="fi.gekkio.roboticchameleon.tests" />
+
 </manifest>

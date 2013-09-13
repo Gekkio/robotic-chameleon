@@ -19,10 +19,13 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>robotic-chameleon</artifactId>
 			<version>${project.version}</version>
-			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -60,6 +63,10 @@
 			<plugin>
 				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 				<artifactId>android-maven-plugin</artifactId>
+				<configuration>
+					<useHeaderArchives>false</useHeaderArchives>
+					<target>all</target>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
