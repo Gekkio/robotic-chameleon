@@ -18,7 +18,8 @@ public class NV12Test extends TestBase {
             RoboticChameleon.fromNV12().toARGB(
                 srcs[0], srcStrideY,
                 srcs[1], srcStrideUV,
-                dst, dstStrideARGB, WIDTH, HEIGHT);
+                dst, dstStrideARGB,
+                WIDTH, HEIGHT);
         }
 
         @Override
@@ -37,7 +38,8 @@ public class NV12Test extends TestBase {
 
             RoboticChameleon.fromNV12().toARGB(
                 src, srcStrideY, srcStrideUV,
-                dst, dstStrideARGB, WIDTH, HEIGHT);
+                dst, dstStrideARGB,
+                WIDTH, HEIGHT);
         }
 
         @Override
@@ -48,13 +50,13 @@ public class NV12Test extends TestBase {
 
     public void testSliceNV12ToARGB() {
         byte[] inputData = getAssetBytes("frames/NV12.yuv");
-        byte[] resultData = runOneWay(inputData, SliceNV12ToARGB);
-        writeToFilesDir("SliceNV12ToARGB.rgb", resultData);
+        ByteBuffer resultData = runOneWay(inputData, SliceNV12ToARGB);
+        writePngToFilesDir("SliceNV12ToARGB.png", resultData);
     }
 
     public void testNV12ToARGB() {
         byte[] inputData = getAssetBytes("frames/NV12.yuv");
-        byte[] resultData = runOneWay(inputData, NV12ToARGB);
-        writeToFilesDir("NV12ToARGB.rgb", resultData);
+        ByteBuffer resultData = runOneWay(inputData, NV12ToARGB);
+        writePngToFilesDir("NV12ToARGB.png", resultData);
     }
 }

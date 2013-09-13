@@ -18,12 +18,15 @@ OUT=$BASE/target/test-out-pngs
 mkdir -p "$OUT"
 adb pull /data/data/fi.gekkio.roboticchameleon.tests/files "$OUT"
 
-SUFFIXES="rgb yuv"
-
-for SUFFIX in $SUFFIXES; do
+convert_to_png() {
+  SUFFIX=$1
+  PIX_FMT=$2
   for INPUT in `find "$OUT" -type f -name '*.'$SUFFIX`; do
     OUTPUT=${INPUT%.$SUFFIX}.png
     echo "$INPUT -> $OUTPUT"
-    avconv -y -v error -xerror -s 640x480 -pix_fmt bgra -i "$INPUT" $OUTPUT > /dev/null
+    avconv -y -v error -xerror -s 640x480 -pix_fmt "$PIX_FMT" -i "$INPUT" $OUTPUT > /dev/null
+    rm "$INPUT"
   done
-done
+}
+
+convert_to_png "yuv" "yuv420p"

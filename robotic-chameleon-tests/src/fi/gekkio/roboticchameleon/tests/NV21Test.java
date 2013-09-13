@@ -18,7 +18,8 @@ public class NV21Test extends TestBase {
             RoboticChameleon.fromNV21().toARGB(
                 srcs[0], srcStrideY,
                 srcs[1], srcStrideVU,
-                dst, dstStrideARGB, WIDTH, HEIGHT);
+                dst, dstStrideARGB,
+                WIDTH, HEIGHT);
         }
 
         @Override
@@ -37,7 +38,8 @@ public class NV21Test extends TestBase {
 
             RoboticChameleon.fromNV21().toARGB(
                 src, srcStrideY, srcStrideVU,
-                dst, dstStrideARGB, WIDTH, HEIGHT);
+                dst, dstStrideARGB,
+                WIDTH, HEIGHT);
         }
 
         @Override
@@ -48,14 +50,14 @@ public class NV21Test extends TestBase {
 
     public void testSliceNV21ToARGB() {
         byte[] inputData = getAssetBytes("frames/NV21.yuv");
-        byte[] resultData = runOneWay(inputData, SliceNV21ToARGB);
-        writeToFilesDir("SliceNV21ToARGB.rgb", resultData);
+        ByteBuffer resultData = runOneWay(inputData, SliceNV21ToARGB);
+        writePngToFilesDir("SliceNV21ToARGB.png", resultData);
     }
 
     public void testNV21ToARGB() {
         byte[] inputData = getAssetBytes("frames/NV21.yuv");
-        byte[] resultData = runOneWay(inputData, NV21ToARGB);
-        writeToFilesDir("NV21ToARGB.rgb", resultData);
+        ByteBuffer resultData = runOneWay(inputData, NV21ToARGB);
+        writePngToFilesDir("NV21ToARGB.png", resultData);
     }
 
 }

@@ -20,7 +20,8 @@ public class I422Test extends TestBase {
                 srcs[0], srcStrideY,
                 srcs[1], srcStrideU,
                 srcs[2], srcStrideV,
-                dst, dstStrideARGB, WIDTH, HEIGHT);
+                dst, dstStrideARGB,
+                WIDTH, HEIGHT);
         }
 
         @Override
@@ -40,7 +41,8 @@ public class I422Test extends TestBase {
 
             RoboticChameleon.fromI422().toARGB(
                 src, srcStrideY, srcStrideU, srcStrideV,
-                dst, dstStrideARGB, WIDTH, HEIGHT);
+                dst, dstStrideARGB,
+                WIDTH, HEIGHT);
         }
 
         @Override
@@ -49,16 +51,144 @@ public class I422Test extends TestBase {
         }
     };
 
+    static final Conversion SliceI422ToI420 = new Conversion() {
+        @Override
+        public void convert(ByteBuffer src, ByteBuffer dst) {
+            int srcStrideY = WIDTH;
+            int srcStrideU = WIDTH / 2;
+            int srcStrideV = WIDTH / 2;
+            ByteBuffer[] srcs = ByteBuffers.slice(src, srcStrideY * HEIGHT, srcStrideU * HEIGHT, srcStrideV * HEIGHT);
+
+            int dstStrideY = WIDTH;
+            int dstStrideU = WIDTH / 2;
+            int dstStrideV = WIDTH / 2;
+
+            RoboticChameleon.fromI422().toI420(
+                srcs[0], srcStrideY,
+                srcs[1], srcStrideU,
+                srcs[2], srcStrideV,
+                dst, dstStrideY, dstStrideU, dstStrideV,
+                WIDTH, HEIGHT);
+        }
+
+        @Override
+        public int getDstCapacity() {
+            return WIDTH * HEIGHT + (WIDTH / 2 * HEIGHT);
+        }
+    };
+
+    static final Conversion I422ToI420 = new Conversion() {
+        @Override
+        public void convert(ByteBuffer src, ByteBuffer dst) {
+            int srcStrideY = WIDTH;
+            int srcStrideU = WIDTH / 2;
+            int srcStrideV = WIDTH / 2;
+
+            int dstStrideY = WIDTH;
+            int dstStrideU = WIDTH / 2;
+            int dstStrideV = WIDTH / 2;
+
+            RoboticChameleon.fromI422().toI420(
+                src, srcStrideY, srcStrideU, srcStrideV,
+                dst, dstStrideY, dstStrideU, dstStrideV,
+                WIDTH, HEIGHT);
+        }
+
+        @Override
+        public int getDstCapacity() {
+            return WIDTH * HEIGHT + (WIDTH / 2 * HEIGHT);
+        }
+    };
+
+    static final Conversion I422ToI420Slice = new Conversion() {
+        @Override
+        public void convert(ByteBuffer src, ByteBuffer dst) {
+            int srcStrideY = WIDTH;
+            int srcStrideU = WIDTH / 2;
+            int srcStrideV = WIDTH / 2;
+
+            int dstStrideY = WIDTH;
+            int dstStrideU = WIDTH / 2;
+            int dstStrideV = WIDTH / 2;
+            ByteBuffer[] dsts = ByteBuffers.slice(dst, dstStrideY * HEIGHT, dstStrideU * HEIGHT / 2, dstStrideV * HEIGHT / 2);
+
+            RoboticChameleon.fromI422().toI420(
+                src, srcStrideY, srcStrideU, srcStrideV,
+                dsts[0], dstStrideY,
+                dsts[1], dstStrideU,
+                dsts[2], dstStrideV,
+                WIDTH, HEIGHT);
+        }
+
+        @Override
+        public int getDstCapacity() {
+            return WIDTH * HEIGHT + (WIDTH / 2 * HEIGHT);
+        }
+    };
+
+    static final Conversion SliceI422ToI420Slice = new Conversion() {
+        @Override
+        public void convert(ByteBuffer src, ByteBuffer dst) {
+            int srcStrideY = WIDTH;
+            int srcStrideU = WIDTH / 2;
+            int srcStrideV = WIDTH / 2;
+            ByteBuffer[] srcs = ByteBuffers.slice(src, srcStrideY * HEIGHT, srcStrideU * HEIGHT, srcStrideV * HEIGHT);
+
+            int dstStrideY = WIDTH;
+            int dstStrideU = WIDTH / 2;
+            int dstStrideV = WIDTH / 2;
+            ByteBuffer[] dsts = ByteBuffers.slice(dst, dstStrideY * HEIGHT, dstStrideU * HEIGHT / 2, dstStrideV * HEIGHT / 2);
+
+            RoboticChameleon.fromI422().toI420(
+                srcs[0], srcStrideY,
+                srcs[1], srcStrideU,
+                srcs[2], srcStrideV,
+                dsts[0], dstStrideY,
+                dsts[1], dstStrideU,
+                dsts[2], dstStrideV,
+                WIDTH, HEIGHT);
+        }
+
+        @Override
+        public int getDstCapacity() {
+            return WIDTH * HEIGHT + (WIDTH / 2 * HEIGHT);
+        }
+    };
+
     public void testSliceI422ToARGB() {
         byte[] inputData = getAssetBytes("frames/I422.yuv");
-        byte[] resultData = runOneWay(inputData, SliceI422ToARGB);
-        writeToFilesDir("SliceI422ToARGB.rgb", resultData);
+        ByteBuffer resultData = runOneWay(inputData, SliceI422ToARGB);
+        writePngToFilesDir("SliceI422ToARGB.png", resultData);
     }
 
     public void testI422ToARGB() {
         byte[] inputData = getAssetBytes("frames/I422.yuv");
-        byte[] resultData = runOneWay(inputData, I422ToARGB);
-        writeToFilesDir("I422ToARGB.rgb", resultData);
+        ByteBuffer resultData = runOneWay(inputData, I422ToARGB);
+        writePngToFilesDir("I422ToARGB.png", resultData);
+    }
+
+    public void testI422ToI420() {
+        byte[] inputData = getAssetBytes("frames/I422.yuv");
+        ByteBuffer resultData = runOneWay(inputData, I422ToI420);
+        writeToFilesDir("I422ToI420.yuv", ByteBuffers.asByteArray(resultData));
+    }
+
+    public void testSliceI422ToI420() {
+        byte[] inputData = getAssetBytes("frames/I422.yuv");
+        ByteBuffer resultData = runOneWay(inputData, SliceI422ToI420);
+        writeToFilesDir("SliceI422ToI420.yuv", ByteBuffers.asByteArray(resultData));
+    }
+
+    public void testI422ToI420Slice() {
+        byte[] inputData = getAssetBytes("frames/I422.yuv");
+        ByteBuffer resultData = runOneWay(inputData, I422ToI420Slice);
+        writeToFilesDir("I422ToI420Slice.yuv", ByteBuffers.asByteArray(resultData));
+    }
+
+    public void testSliceI422ToI420Slice() {
+        byte[] inputData = getAssetBytes("frames/I422.yuv");
+        ByteBuffer resultData = runOneWay(inputData, SliceI422ToI420Slice);
+        writeToFilesDir("SliceI422ToI420Slice.yuv", ByteBuffers.asByteArray(resultData));
     }
 
 }
