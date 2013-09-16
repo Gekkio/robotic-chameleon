@@ -32,6 +32,7 @@
 		<maven.gpg.version>1.4</maven.gpg.version>
 		<maven.javadoc.version>2.9.1</maven.javadoc.version>
 		<maven.source.version>2.2.1</maven.source.version>
+		<maven.versions.version>2.1</maven.versions.version>
 	</properties>
 
 	<licenses>
@@ -112,6 +113,14 @@
 					<version>${maven.findbugs.version}</version>
 				</plugin>
 				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>versions-maven-plugin</artifactId>
+					<version>${maven.versions.version}</version>
+					<configuration>
+						<generateBackupPoms>false</generateBackupPoms>
+					</configuration>
+				</plugin>
+				<plugin>
 					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
 					<artifactId>android-maven-plugin</artifactId>
 					<version>${maven.android.version}</version>
@@ -122,6 +131,7 @@
 						</sdk>
 					</configuration>
 				</plugin>
+
 			</plugins>
 		</pluginManagement>
 	</build>
