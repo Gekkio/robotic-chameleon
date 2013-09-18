@@ -24,9 +24,11 @@ convert_to_png() {
   for INPUT in `find "$OUT" -type f -name '*.'$SUFFIX`; do
     OUTPUT=${INPUT%.$SUFFIX}.png
     echo "$INPUT -> $OUTPUT"
-    avconv -y -v error -xerror -s 640x480 -pix_fmt "$PIX_FMT" -i "$INPUT" $OUTPUT > /dev/null
+    avconv -y -v error -xerror -f rawvideo -s 640x480 -pix_fmt "$PIX_FMT" -i "$INPUT" $OUTPUT > /dev/null
     rm "$INPUT"
   done
 }
 
 convert_to_png "yuv" "yuv420p"
+convert_to_png "NV12" "nv12"
+convert_to_png "NV21" "nv21"

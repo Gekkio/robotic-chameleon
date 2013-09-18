@@ -97,6 +97,118 @@ public final class I420 {
             width, height);
     }
 
+    public void toNV12(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcU, int srcStrideU,
+        ByteBuffer srcV, int srcStrideV,
+        ByteBuffer dstY, int dstStrideY,
+        ByteBuffer dstUV, int dstStrideUV,
+        int width, int height) {
+
+        RoboticChameleonJNI.I420ToNV12(
+            srcY, srcStrideY,
+            srcU, srcStrideU,
+            srcV, srcStrideV,
+            dstY, dstStrideY,
+            dstUV, dstStrideUV,
+            width, height);
+    }
+
+    public void toNV12(
+        ByteBuffer srcI420, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstY, int dstStrideY,
+        ByteBuffer dstUV, int dstStrideUV,
+        int width, int height) {
+
+        RoboticChameleonJNI.I420ToNV12(
+            srcI420, srcStrideY, srcStrideU, srcStrideV,
+            dstY, dstStrideY,
+            dstUV, dstStrideUV,
+            width, height);
+    }
+
+    public void toNV12(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcU, int srcStrideU,
+        ByteBuffer srcV, int srcStrideV,
+        ByteBuffer dstNV12, int dstStrideY, int dstStrideUV,
+        int width, int height) {
+
+        RoboticChameleonJNI.I420ToNV12(
+            srcY, srcStrideY,
+            srcU, srcStrideU,
+            srcV, srcStrideV,
+            dstNV12, dstStrideY, dstStrideUV,
+            width, height);
+    }
+
+    public void toNV12(
+        ByteBuffer srcI420, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstNV12, int dstStrideY, int dstStrideUV,
+        int width, int height) {
+
+        RoboticChameleonJNI.I420ToNV12(
+            srcI420, srcStrideY, srcStrideU, srcStrideV,
+            dstNV12, dstStrideY, dstStrideUV,
+            width, height);
+    }
+
+    public void toNV21(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcU, int srcStrideU,
+        ByteBuffer srcV, int srcStrideV,
+        ByteBuffer dstY, int dstStrideY,
+        ByteBuffer dstVU, int dstStrideVU,
+        int width, int height) {
+
+        RoboticChameleonJNI.I420ToNV21(
+            srcY, srcStrideY,
+            srcU, srcStrideU,
+            srcV, srcStrideV,
+            dstY, dstStrideY,
+            dstVU, dstStrideVU,
+            width, height);
+    }
+
+    public void toNV21(
+        ByteBuffer srcI420, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstY, int dstStrideY,
+        ByteBuffer dstVU, int dstStrideVU,
+        int width, int height) {
+
+        RoboticChameleonJNI.I420ToNV21(
+            srcI420, srcStrideY, srcStrideU, srcStrideV,
+            dstY, dstStrideY,
+            dstVU, dstStrideVU,
+            width, height);
+    }
+
+    public void toNV21(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcU, int srcStrideU,
+        ByteBuffer srcV, int srcStrideV,
+        ByteBuffer dstNV21, int dstStrideY, int dstStrideVU,
+        int width, int height) {
+
+        RoboticChameleonJNI.I420ToNV21(
+            srcY, srcStrideY,
+            srcU, srcStrideU,
+            srcV, srcStrideV,
+            dstNV21, dstStrideY, dstStrideVU,
+            width, height);
+    }
+
+    public void toNV21(
+        ByteBuffer srcI420, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstNV21, int dstStrideY, int dstStrideVU,
+        int width, int height) {
+
+        RoboticChameleonJNI.I420ToNV21(
+            srcI420, srcStrideY, srcStrideU, srcStrideV,
+            dstNV21, dstStrideY, dstStrideVU,
+            width, height);
+    }
+
     public void toYV12(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcU, int srcStrideU,
