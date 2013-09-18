@@ -32,6 +32,13 @@ class TestBase extends AndroidTestCase {
         inputData = ByteBuffers.asDirectBuffer(getAssetBytes(frameFileName));
     }
 
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
+        if (bitmap != null)
+            bitmap.recycle();
+    }
+
     public TestBase(String frameFileName) {
         this.frameFileName = frameFileName;
     }
