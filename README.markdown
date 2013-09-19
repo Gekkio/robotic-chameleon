@@ -13,7 +13,7 @@ Robotic Chameleon is licensed under the Apache License, Version 2.0.
 <dependency>
   <groupId>fi.gekkio.roboticchameleon</groupId>
   <artifactId>robotic-chameleon</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
 </dependency>
 ```
 
@@ -25,28 +25,28 @@ If you want to support all kinds of devices, you should include all native libra
 <dependency>
   <groupId>fi.gekkio.roboticchameleon</groupId>
   <artifactId>librobotic-chameleon</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
   <type>so</type>
   <classifier>armeabi</classifier>
 </dependency>
 <dependency>
   <groupId>fi.gekkio.roboticchameleon</groupId>
   <artifactId>librobotic-chameleon</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
   <type>so</type>
   <classifier>armeabi-v7a</classifier>
 </dependency>
 <dependency>
   <groupId>fi.gekkio.roboticchameleon</groupId>
   <artifactId>librobotic-chameleon</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
   <type>so</type>
   <classifier>mips</classifier>
 </dependency>
 <dependency>
   <groupId>fi.gekkio.roboticchameleon</groupId>
   <artifactId>librobotic-chameleon</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
   <type>so</type>
   <classifier>x86</classifier>
 </dependency>
