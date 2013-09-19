@@ -91,6 +91,30 @@ public final class NV12 {
             width, height);
     }
 
+    public void toRGB565(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcUV, int srcStrideUV,
+        ByteBuffer dstRGB565, int dstStrideRGB565,
+        int width, int height) {
+
+        RoboticChameleonJNI.NV12ToRGB565(
+            srcY, srcStrideY,
+            srcUV, srcStrideUV,
+            dstRGB565, dstStrideRGB565,
+            width, height);
+    }
+
+    public void toRGB565(
+        ByteBuffer srcNV12, int srcStrideY, int srcStrideUV,
+        ByteBuffer dstRGB565, int dstStrideRGB565,
+        int width, int height) {
+
+        RoboticChameleonJNI.NV12ToRGB565(
+            srcNV12, srcStrideY, srcStrideUV,
+            dstRGB565, dstStrideRGB565,
+            width, height);
+    }
+
     public void toYV12(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcUV, int srcStrideUV,

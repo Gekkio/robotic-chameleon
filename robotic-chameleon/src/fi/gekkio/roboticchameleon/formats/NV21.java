@@ -91,6 +91,30 @@ public final class NV21 {
             width, height);
     }
 
+    public void toRGB565(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcVU, int srcStrideVU,
+        ByteBuffer dstRGB565, int dstStrideRGB565,
+        int width, int height) {
+
+        RoboticChameleonJNI.NV21ToRGB565(
+            srcY, srcStrideY,
+            srcVU, srcStrideVU,
+            dstRGB565, dstStrideRGB565,
+            width, height);
+    }
+
+    public void toRGB565(
+        ByteBuffer srcNV21, int srcStrideY, int srcStrideVU,
+        ByteBuffer dstRGB565, int dstStrideRGB565,
+        int width, int height) {
+
+        RoboticChameleonJNI.NV21ToRGB565(
+            srcNV21, srcStrideY, srcStrideVU,
+            dstRGB565, dstStrideRGB565,
+            width, height);
+    }
+
     public void toYV12(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcUV, int srcStrideUV,

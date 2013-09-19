@@ -97,6 +97,66 @@ public final class I422 {
             width, height);
     }
 
+    public void toI422(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcU, int srcStrideU,
+        ByteBuffer srcV, int srcStrideV,
+        ByteBuffer dstY, int dstStrideY,
+        ByteBuffer dstU, int dstStrideU,
+        ByteBuffer dstV, int dstStrideV,
+        int width, int height) {
+
+        RoboticChameleonJNI.I422Copy(
+            srcY, srcStrideY,
+            srcU, srcStrideU,
+            srcV, srcStrideV,
+            dstY, dstStrideY,
+            dstU, dstStrideU,
+            dstV, dstStrideV,
+            width, height);
+    }
+
+    public void toI422(
+        ByteBuffer srcI422, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstY, int dstStrideY,
+        ByteBuffer dstU, int dstStrideU,
+        ByteBuffer dstV, int dstStrideV,
+        int width, int height) {
+
+        RoboticChameleonJNI.I422Copy(
+            srcI422, srcStrideY, srcStrideU, srcStrideV,
+            dstY, dstStrideY,
+            dstU, dstStrideU,
+            dstV, dstStrideV,
+            width, height);
+    }
+
+    public void toI422(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer srcU, int srcStrideU,
+        ByteBuffer srcV, int srcStrideV,
+        ByteBuffer dstI422, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height) {
+
+        RoboticChameleonJNI.I422Copy(
+            srcY, srcStrideY,
+            srcU, srcStrideU,
+            srcV, srcStrideV,
+            dstI422, dstStrideY, dstStrideU, dstStrideV,
+            width, height);
+    }
+
+    public void toI422(
+        ByteBuffer srcI422, int srcStrideY, int srcStrideU, int srcStrideV,
+        ByteBuffer dstI422, int dstStrideY, int dstStrideU, int dstStrideV,
+        int width, int height) {
+
+        RoboticChameleonJNI.I422Copy(
+            srcI422, srcStrideY, srcStrideU, srcStrideV,
+            dstI422, dstStrideY, dstStrideU, dstStrideV,
+            width, height);
+    }
+
     public void toYV12(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer srcU, int srcStrideU,

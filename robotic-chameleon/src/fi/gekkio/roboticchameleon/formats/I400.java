@@ -22,6 +22,17 @@ public final class I400 {
             width, height);
     }
 
+    public void toI400(
+        ByteBuffer srcY, int srcStrideY,
+        ByteBuffer dstY, int dstStrideY,
+        int width, int height) {
+
+        RoboticChameleonJNI.I400Copy(
+            srcY, srcStrideY,
+            dstY, dstStrideY,
+            width, height);
+    }
+
     public void toI420(
         ByteBuffer srcY, int srcStrideY,
         ByteBuffer dstY, int dstStrideY,
