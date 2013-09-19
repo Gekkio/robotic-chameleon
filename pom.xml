@@ -146,7 +146,7 @@
 						<executions>
 							<execution>
 								<goals>
-									<goal>javadoc</goal>
+									<goal>jar</goal>
 								</goals>
 							</execution>
 						</executions>
@@ -183,7 +183,7 @@
 						<executions>
 							<execution>
 								<goals>
-									<goal>javadoc</goal>
+									<goal>jar</goal>
 								</goals>
 							</execution>
 						</executions>
